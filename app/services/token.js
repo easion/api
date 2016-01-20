@@ -13,8 +13,8 @@ export default {
    * @param  {String}      token
    * @return {Object|Null} Person or null
    */
-  personForToken: function (token) {
-    const payload = this.decodeToken(token)
+  getPerson: function (token) {
+    const payload = this.decode(token)
 
     return Person.findOne({ id: payload.id })
   },
@@ -25,7 +25,7 @@ export default {
    * @param  {String}       token
    * @return {Object|Null}  Payload or null
    */
-  decodeToken: function (token) {
+  decode: function (token) {
     try {
       return jwt.verify(token, config.auth.secret)
     } catch (err) {
@@ -39,7 +39,7 @@ export default {
    * @param  {Object} person
    * @return {String} JWT
    */
-  tokenForPerson: function (person) {
+  fromPerson: function (person) {
     const payload = {
       person: pickAll(['id', 'name', 'email'], person)
     }
@@ -53,7 +53,7 @@ export default {
    * @param  {String} token Github token
    * @return {Promise} JWT
    */
-  exchangeGithubToken: co.wrap(function* (token) {
+  fromGithubToken: co.wrap(function* (token) {
     const github = new GithubApi({
       version: '3.0.0',
       timeout: 1000
@@ -62,9 +62,21 @@ export default {
     github.authenticate({ type: 'oauth', token})
 
     const githubUser = yield Q.nfcall(github.users.get, {})
-    const person = yield Person.findOne({ 'github.id': githubUser.id })
 
-    if (person) return this.tokenForPerson(person)
+    const githubPerson = Person.findOne({ 'github.id': githubUser.id })
+    if (githubPerson) return this.fromPerson(githubPerson)
+
+    const emailPerson = Person.findOne({ email: githubUser.email })
+    if (emailPerson) {
+      emailPerson.update({
+        github: {
+          id: githubUser.id,
+          username: githubUser.username,
+          url: githubUser.html_url
+        }
+      })
+      return this.fromPerson(emailPerson)
+    }
 
     const newPerson = yield Person.create({
       email: githubUser.email,
@@ -76,6 +88,6 @@ export default {
       }
     })
 
-    return this.tokenForPerson(newPerson)
+    return this.fromPerson(newPerson)
   })
 }

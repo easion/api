@@ -1,20 +1,13 @@
 import { Router } from 'express'
-import auth from './services/auth.js'
+import tokenService from './services/token'
 import response from './helpers/response'
 import peopleController from './controllers/people'
+import authController from './controllers/auth'
 
 const router = Router()
 
 router.use('/people', peopleController)
 
-router.get('/auth/github', (req, res) => {
-  const token = req.query.token
-
-  auth.exchangeGithubToken(token)
-    .then(jwt => {
-      res.json(response.token(jwt))
-    })
-    .catch(console.log)
-})
+router.use('/auth', authController)
 
 export default router

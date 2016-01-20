@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { values, pluck } from 'ramda'
 
 export default {
   /**
@@ -36,7 +36,7 @@ export default {
   token: function (token) {
     return {
       success: true,
-      data: { token}
+      data: { token }
     }
   },
 
@@ -81,6 +81,15 @@ export default {
     }
   },
 
+  forbidden: function () {
+    return {
+      success: false,
+      type: 'Forbidden',
+      message: 'Permission denied for resource',
+      errors: []
+    }
+  },
+
   /**
    * A validation error response
    *
@@ -92,7 +101,7 @@ export default {
       success: false,
       type: 'ValidationError',
       message: err.message,
-      errors: _.mapValues(err.errors, 'message')
+      errors: pluck('message', values(err.errors))
     }
   },
 
@@ -106,7 +115,8 @@ export default {
     return {
       success: false,
       type: 'Error',
-      message: err.message
+      message: err.message,
+      errors: []
     }
   }
 }
