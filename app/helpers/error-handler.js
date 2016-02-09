@@ -1,15 +1,16 @@
 import response from './response'
 
 export default (err, req, res, next) => {
-    switch (err.name) {
-        case 'ValidationError':
-            res.status(400).json(response.validationError(err))
-            break
+  console.log(err.name)
+  switch (err.name) {
+    case 'ValidationError':
+      res.status(400).json(response.validationError(err))
+      break
 
-        default:
-            res.status(500).json(response.error(err))
-            break
-    }
+    default:
+      res.status(500).json(response.error(err))
+      break
+  }
 
-    next(err.stack)
+  next(err.stack)
 }

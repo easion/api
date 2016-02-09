@@ -1,10 +1,10 @@
 export default {
   app: {
-    name: 'JS People',
+    name: 'JS Map',
     port: process.env.PORT
   },
   db: {
-    dsn: process.env.MONGO_DSN
+    name: 'jsmap'
   },
   auth: {
     secret: process.env.TOKEN_SECRET

@@ -1,0 +1,19 @@
+2016-02-08T23:00:30.656781000 0.296362s notice: Recursively removing directory /Users/jordan/code/js-map/api/rethinkdb_data/tmp
+2016-02-08T23:00:30.659228000 0.298814s notice: Initializing directory /Users/jordan/code/js-map/api/rethinkdb_data
+2016-02-08T23:00:30.659363000 0.298943s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/jordan/code/js-map/api/rethinkdb_data' did not already exist or is empty.)
+2016-02-08T23:00:30.659404000 0.298983s notice: Running rethinkdb 2.2.1 (CLANG 4.2 (clang-425.0.28))...
+2016-02-08T23:00:30.704387000 0.343967s notice: Running on Darwin 15.0.0 x86_64
+2016-02-08T23:00:30.704432000 0.344011s notice: Loading data from directory /Users/jordan/code/js-map/api/rethinkdb_data
+2016-02-08T23:00:31.444924000 1.084504s info: Automatically using cache size of 100 MB
+2016-02-08T23:00:31.444937000 1.084516s warn: Cache size does not leave much memory for server and query overhead (available memory: 676 MB).
+2016-02-08T23:00:31.444949000 1.084528s warn: Cache size is very low and may impact performance.
+2016-02-08T23:00:31.445756000 1.085336s notice: Listening for intracluster connections on port 29015
+2016-02-08T23:00:31.447954000 1.087533s notice: Listening for client driver connections on port 28015
+2016-02-08T23:00:31.448108000 1.087687s notice: Listening for administrative HTTP connections on port 8080
+2016-02-08T23:00:31.448113000 1.087692s notice: Listening on addresses: 127.0.0.1, 127.94.0.1, ::1
+2016-02-08T23:00:31.448114000 1.087693s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-02-08T23:00:31.448117000 1.087697s notice: Server ready, "Jordans_MacBook_Pro_local_ikm" 6a482c4b-d2be-41c6-b58d-aca130cb13e5
+2016-02-08T23:00:32.617940000 2.257564s notice: A newer version of the RethinkDB server is available: 2.2.4. You can read the changelog at <https://github.com/rethinkdb/rethinkdb/releases>.
+2016-02-08T23:41:53.453608000 2483.155800s info: Table 01c4196b-7d9f-4009-a472-4981a521b8d5: Added replica on this server.
+2016-02-08T23:41:54.543840000 2484.246033s info: Table 01c4196b-7d9f-4009-a472-4981a521b8d5: Starting a new Raft election for term 1.
+2016-02-08T23:41:54.932258000 2484.634494s info: Table 01c4196b-7d9f-4009-a472-4981a521b8d5: This server is Raft leader for term 1. Latest log index is 0.

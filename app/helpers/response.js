@@ -10,7 +10,7 @@ export default {
   collection: function (items) {
     return {
       success: true,
-      data: items.map(item => item.toObject())
+      data: items.map(item => item)
     }
   },
 
@@ -23,7 +23,7 @@ export default {
   single: function (item) {
     return {
       success: true,
-      data: item.toObject()
+      data: item
     }
   },
 
@@ -49,7 +49,7 @@ export default {
   created: function (item) {
     return {
       success: true,
-      data: item.toObject()
+      data: item
     }
   },
 

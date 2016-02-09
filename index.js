@@ -6,7 +6,6 @@ import errorHandler from './app/helpers/error-handler'
 import mongoose from 'mongoose'
 import bearer from 'express-bearer-token'
 import bodyParser from 'body-parser'
-mongoose.connect(config.db.dsn)
 
 const app = express()
 

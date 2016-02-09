@@ -1,5 +1,5 @@
 import GithubApi from 'github4'
-import Person from '../models/Person'
+import Person from '../resources/Person'
 import config from '../config'
 import Q from 'q'
 import co from 'co'
@@ -16,7 +16,7 @@ export default {
   getPerson: function (token) {
     const payload = this.decode(token)
 
-    return Person.findOne({ id: payload.id })
+    return Person.find({ id: payload.id })
   },
 
   /**
@@ -44,7 +44,9 @@ export default {
       person: pickAll(['id', 'name', 'email'], person)
     }
 
-    return jwt.sign(payload, config.auth.secret)
+    return jwt.sign(payload, config.auth.secret, {
+      expiresIn: config.auth.lifetime || '1d'
+    })
   },
 
   /**
@@ -53,22 +55,22 @@ export default {
    * @param  {String} token Github token
    * @return {Promise} JWT
    */
-  fromGithubToken: co.wrap(function* (token) {
+  fromGithubToken: co.wrap(function *(token) {
     const github = new GithubApi({
       version: '3.0.0',
       timeout: 1000
     })
 
-    github.authenticate({ type: 'oauth', token})
+    github.authenticate({ type: 'oauth', token })
 
     const githubUser = yield Q.nfcall(github.users.get, {})
 
-    const githubPerson = Person.findOne({ 'github.id': githubUser.id })
+    const githubPerson = yield Person.find({ 'github.id': githubUser.id })
     if (githubPerson) return this.fromPerson(githubPerson)
 
-    const emailPerson = Person.findOne({ email: githubUser.email })
+    const emailPerson = yield Person.find({ email: githubUser.email })
     if (emailPerson) {
-      emailPerson.update({
+      Person.update(emailPerson.id, {
         github: {
           id: githubUser.id,
           username: githubUser.username,
